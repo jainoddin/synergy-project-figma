@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const Login = () => {
+const Signup  = () => {
   const [passwordType, setPasswordType] = useState('password');
 
   const passwordInput = React.useRef(null);
@@ -17,13 +17,13 @@ const Login = () => {
 
   const navigateFunc = useNavigate();
   const handleSkip = () => {
-    navigateFunc("/home3");
+    navigateFunc("/Login");
   };
   const forgotpassword=()=>{
     navigateFunc("/forgotpassword")
   }
-  const signup=()=>{
-    navigateFunc("/signup")
+  const signin=()=>{
+    navigateFunc("/Login")
   }
   const Login=()=>{
     try {
@@ -57,18 +57,17 @@ const Login = () => {
         <div className='text-content'>
           <h1>Sign in now</h1>
           <div>
-            <p>Please sign in to continue our app</p>
+            <p>Please fill the details and create account</p>
           </div>
         </div>
         <br></br>
         <div className='body'>
           <form onSubmit={solve}>
+          <input type="text" id="first" name="first" placeholder="Enter your Name" required />
+
             <input type="email" id="first" name="first" placeholder="Enter your Email" required />
             <div className="password-field">
-            <input 
-    type="password" 
-    placeholder="Enter Password" 
-  />
+              <input type={passwordType} id="password" placeholder="Enter Password" ref={passwordInput} />
             </div>
             <div className='c f'>
             <a href="#" style={{ textDecoration: "none" ,fontSize:"13px" }} onClick={forgotpassword}>
@@ -81,15 +80,14 @@ const Login = () => {
               </button>
             </div>
           </form>
-          <p className='p'>Don't have an account? 
-            <a href="#" style={{ textDecoration: "none" }} onClick={signup}>
-              <span> </span>Sign up
+          <p className='p'>Already have an account? 
+            <a href="#" style={{ textDecoration: "none" }} onClick={signin}>
+              <span> </span>Sign in
             </a>
             <br></br><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Or connect</span>
           </p>
-          <br></br>
           <div id="social">
-    <a href='https://www.facebook.com'>  <img  id='imgg'  src={facebook} alt="Facebook"/></a>
+          <a href='https://www.facebook.com'>  <img  id='imgg'  src={facebook} alt="Facebook"/></a>
       <a href='https://www.instagram.com/'><img id='imgg' src={insta} alt="LinkedIn"/></a>
      <a href='https://twitter.com/i/flow/login'> <img id='imgg'  src={twitter} alt="Instagram"/></a>
     </div>
@@ -99,5 +97,4 @@ const Login = () => {
   )
 }
 
-export default Login;
-
+export default Signup ;
