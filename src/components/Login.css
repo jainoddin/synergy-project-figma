@@ -1,0 +1,11 @@
+.btn-1 {
+    border: none;
+    border-radius: 50%;
+    padding: 10px 15px;
+    position: relative;
+    left: 5%;
+  }
+  .text-content{
+    justify-content: center;
+    text-align: center;
+  }
