@@ -1,6 +1,6 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect,useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft} from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft,faEnvelopeOpenText} from "@fortawesome/free-solid-svg-icons";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
@@ -9,10 +9,13 @@ import emailjs from 'emailjs-com';
 import OTPInput, { ResendOTP } from "otp-input-react";
 import cookie from "js-cookie";
 import axios from "axios";
+import "./ForgotPassword.css"
 
 
 
 const ForgotPassword  = () => { 
+  const popupRef = useRef(null);
+
     const [otp, setOtp] = useState('');
     const[ConfrmPassword,setConfrmPassword]=useState(false)
     const [email, setEmail] = useState('');
@@ -20,9 +23,7 @@ const ForgotPassword  = () => {
     const [sendingOTP, setSendingOTP] = useState(false);
     const [otpValue, setOtpValue] = useState(""); 
     const [emailValue, setemailValue] = useState('');
-    const[a,seta]=useState(true);
-    const[b,setb]=useState(false);
-    const[c,setc]=useState(false);
+  
 
 
 
@@ -34,6 +35,10 @@ const ForgotPassword  = () => {
   const navigateFunc = useNavigate();
 
   const handleSkip = () => {
+    navigateFunc("/Login")
+  };
+
+  const handleSkipp = () => {
     window.location.reload();
   };
 
@@ -44,12 +49,12 @@ const ForgotPassword  = () => {
   });
 
   const sendOTPToEmail = (email, otp) => {
-    const serviceId = 'service_bz75du9';
-    const templateId = 'template_nzhj6bn';
-    const userId = 'yyZrouw_8ZNT_cEge';
+    const serviceId = 'service_tdbb3rg';
+    const templateId = 'template_j773w8h';
+    const userId = 'G-5XyfNHUsUyFnEgU';
     var params ={
       otp: otp,
-      from_name:"jainoddin_project",
+      from_name:"figma_project",
       toemail:email,
     }
 
@@ -75,6 +80,11 @@ const ForgotPassword  = () => {
   }
 
   const handleSubmitt= async (e)=>{
+   
+      if (popupRef.current) {
+        popupRef.current.classList.add('open');
+      }
+    
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:4000/emailcheck", {
@@ -101,7 +111,10 @@ const ForgotPassword  = () => {
     setOtp(otpValue);
     sendOTPToEmail(emailValue, otpValue);
     setSendingOTP(false);
-    setOtpSent(2); 
+    setTimeout(() => {
+      setOtpSent(2);
+
+    }, 2000);  
       }
 
   const handleResendClick = () => {
@@ -112,7 +125,10 @@ const ForgotPassword  = () => {
     setOtp(otpValue);
     sendOTPToEmail(email,otpValue);
     setSendingOTP(false);
-    setOtpSent(2);
+    setTimeout(() => {
+      setOtpSent(2);
+
+    }, 2000);
    
   };
   
@@ -136,7 +152,7 @@ const ForgotPassword  = () => {
   const passwordInput = React.useRef(null);
   const toggler = React.useRef(null);
 
-   console.log("passwod",password)
+  
   
 
   const handleSubmittt = async (event) => {
@@ -173,6 +189,11 @@ const ForgotPassword  = () => {
     toast.error("Password not matched")
   }
   };
+
+
+ 
+
+
   return (
     <>
     <ToastContainer></ToastContainer>
@@ -196,17 +217,25 @@ const ForgotPassword  = () => {
                       name="Email"
                       onChange={(e)=>setEmail(e.target.value)} required />        
             <div class="wrap">
-            <button className='button'  type="submit" disabled={sendingOTP}>
+            <button className='button'   type="submit" disabled={sendingOTP}>
           {sendingOTP ? 'Sending OTP...' : 'Reset Password'}
         </button>
             </div>
           </form>
+          <div className='recovery-popup' ref={popupRef}>
+          <div className='popup'>
+            
+            <div className='round-icon '><FontAwesomeIcon icon={faEnvelopeOpenText}></FontAwesomeIcon></div>
+            <h5>Check your email</h5>
+            <p>We have send passwod recovery instruction to email</p>
+            </div> 
+        </div>
         </div>
       </div>
            ):otpSent==2 ?  (
             <div style={{overflow:"hidden"}}>
         <div style={{ position: 'relative', height: '50px' }}>
-          <button className='btn-1' onClick={handleSkip} style={{ position: 'absolute', bottom: '0' }}>
+          <button className='btn-1' onClick={handleSkipp} style={{ position: 'absolute', bottom: '0' }}>
             <FontAwesomeIcon style={{ fontSize: "150%" }} icon={faAngleLeft} />
           </button>
         </div>
@@ -238,7 +267,8 @@ const ForgotPassword  = () => {
             Verify OTP
           </button>
             </div>
-          </form>          
+          </form>
+                   
         </div>
       </div>           
       ): (
@@ -246,7 +276,7 @@ const ForgotPassword  = () => {
          <div style={{overflow:"hidden"}}>
            <navigateFunc></navigateFunc>
          <div style={{ position: 'relative', height: '50px' }}>
-           <button className='btn-1' onClick={handleSkip} style={{ position: 'absolute', bottom: '0' }}>
+           <button className='btn-1' onClick={handleSkipp} style={{ position: 'absolute', bottom: '0' }}>
              <FontAwesomeIcon style={{ fontSize: "150%" }} icon={faAngleLeft} />
            </button>
          </div>

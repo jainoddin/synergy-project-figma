@@ -34,7 +34,7 @@ const Signup  = () => {
   const navigateFunc = useNavigate();
 
   const handleSkip = () => {
-    window.location.reload();
+    navigateFunc("/Login")
   };
 
   const [FormData, SetFormData] = useState({

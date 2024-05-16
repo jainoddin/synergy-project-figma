@@ -43,6 +43,7 @@ const Login = () => {
         password,
       });
       const data = response.data;
+      console.log(data);
       cookie.set("jwtAuth", data.token);
       console.log("User Login successfully!");
       toast.success("Logged in Successfully!");
@@ -62,8 +63,7 @@ const Login = () => {
     const email = document.getElementById('first').value;
     const password = passwordInput.current.value;
 
-    // Perform form validation or submit the form data here
-    console.log(`Email: ${email}, Password: ${password}`);
+   
   };
 
   return (
