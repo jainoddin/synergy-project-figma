@@ -1,54 +1,135 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft} from "@fortawesome/free-solid-svg-icons";
 import "./Login.css";
 import facebook from '../imgs/fb.jpg'
 import insta from'../imgs/insta.jpg'
 import twitter from '../imgs/twitter.png'
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import emailjs from 'emailjs-com';
+import OTPInput, { ResendOTP } from "otp-input-react";
 
 
 
 const Signup  = () => {
-  const [passwordType, setPasswordType] = useState('password');
+  
+    const [otp, setOtp] = useState('');
+    const [email, setEmail] = useState('');
+    const [otpSent, setOtpSent] = useState(false);
+    const [sendingOTP, setSendingOTP] = useState(false);
+    const [otpValue, setOtpValue] = useState(""); 
+    const [emailValue, setemailValue] = useState('');
 
-  const passwordInput = React.useRef(null);
-  const toggler = React.useRef(null);
+  const handleInputChange = (text) => {
+    setOtpValue(text); // Update OTP value state
+  };
+
+  const HandleFormData = (e) => {
+    const { name, value } = e.target;
+    SetFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
 
   const navigateFunc = useNavigate();
+
   const handleSkip = () => {
-    navigateFunc("/Login");
+    window.location.reload();
   };
+
+  const [FormData, SetFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const sendOTPToEmail = (email, otp) => {
+    const serviceId = 'service_bz75du9';
+    const templateId = 'template_nzhj6bn';
+    const userId = 'yyZrouw_8ZNT_cEge';
+    var params ={
+      otp: otp,
+      from_name:"jainoddin_project",
+      toemail:email,
+    }
+
+    emailjs.send(serviceId, templateId, params, userId).then(
+      (response) => {
+        console.log('Email sent successfully!', response.status);
+      },
+      (error) => {
+        console.log('Error sending email:', error);
+      }
+    );
+  }
+
+  const generateOTP = () => {
+    const otp = Math.floor(100000 + Math.random() * 900000);
+    return otp;
+  }
   const forgotpassword=()=>{
     navigateFunc("/forgotpassword")
   }
   const signin=()=>{
     navigateFunc("/Login")
   }
-  const Login=()=>{
-    try {
-      navigateFunc("/index")
-      
-    } catch (error) {
-      console.log(error);
-      
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setemailValue(e.target.value);
+    setEmail(emailValue);
+    setOtp('');
+    setSendingOTP(true);
+    const otpValue = generateOTP();
+    setOtp(otpValue);
+    sendOTPToEmail(FormData.email, otpValue);
+    setSendingOTP(false);
+    setOtpSent(true); 
+  }
+
+
+  const handleResendClick = () => {
+    setOtp('');
+    setEmail(FormData.email);
+
+    setSendingOTP(true);
+    const otpValue = generateOTP();
+    setOtp(otpValue);
+    sendOTPToEmail(FormData.email,otpValue);
+    setSendingOTP(false);
+    setOtpSent(true);
+  };
+  
+  const otpcomper=otp
+  const verifyOTP2 =async (e)=>{
+    e.preventDefault();  
+    if (otpValue == otpcomper) {
+      try{
+        const response = await fetch("http://localhost:4000/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(FormData),
+        });    
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.message);
+        }   
+        console.log("User registered successfully!");
+        navigateFunc("/Login");
+     } catch (err) {
+        console.error("Error registering user:", err.message);
+        toast.error("Registration Failed! Try Again Later.");
+      }    
+    } else {
+      toast.error("invaild OTP")
     }
   }
 
- 
-
-  const solve = (event) => {
-    event.preventDefault();
-    const email = document.getElementById('first').value;
-    const password = passwordInput.current.value;
-
-    // Perform form validation or submit the form data here
-    console.log(`Email: ${email}, Password: ${password}`);
-  };
-
   return (
     <>
-      <div style={{overflow:"hidden"}}>
+    <ToastContainer></ToastContainer>
+    <navigateFunc></navigateFunc>
+    {!otpSent ? ( <div style={{overflow:"hidden"}}>
         <div style={{ position: 'relative', height: '50px' }}>
           <button className='btn-1' onClick={handleSkip} style={{ position: 'absolute', bottom: '0' }}>
             <FontAwesomeIcon style={{ fontSize: "150%" }} icon={faAngleLeft} />
@@ -62,12 +143,18 @@ const Signup  = () => {
         </div>
         <br></br>
         <div className='body'>
-          <form onSubmit={solve}>
-          <input type="text" id="first" name="first" placeholder="Enter your Name" required />
+          <form id="sendOTPForm" onSubmit={handleSubmit}>
+          <input type="text" id="first"  placeholder="Enter your Name" value={FormData.name}
+                      name="name"
+                      onChange={HandleFormData} required />
 
-            <input type="email" id="first" name="first" placeholder="Enter your Email" required />
+            <input type="email" id="email" placeholder="Enter your Email"   value={FormData.email}
+                      name="email"
+                      onChange={HandleFormData} required />
             <div className="password-field">
-              <input type={passwordType} id="password" placeholder="Enter Password" ref={passwordInput} />
+              <input  id="password" placeholder="Enter Password" value={FormData.password}
+                      name="password"
+                      onChange={HandleFormData} />
             </div>
             <div className='c f'>
             <a href="#" style={{ textDecoration: "none" ,fontSize:"13px" }} onClick={forgotpassword}>
@@ -75,9 +162,9 @@ const Signup  = () => {
             </a>
             </div>
             <div class="wrap">
-              <button className='button' onClick={Login} type="submit">
-                Submit
-              </button>
+            <button className='button' type="submit" disabled={sendingOTP}>
+          {sendingOTP ? 'Sending OTP...' : 'Send OTP'}
+        </button>
             </div>
           </form>
           <p className='p'>Already have an account? 
@@ -93,8 +180,47 @@ const Signup  = () => {
     </div>
         </div>
       </div>
+           ) : (
+            <div style={{overflow:"hidden"}}>
+        <div style={{ position: 'relative', height: '50px' }}>
+          <button className='btn-1' onClick={handleSkip} style={{ position: 'absolute', bottom: '0' }}>
+            <FontAwesomeIcon style={{ fontSize: "150%" }} icon={faAngleLeft} />
+          </button>
+        </div>
+        <div className='text-content'>
+          <h1>Otp Verification</h1>
+          <div>
+            <p>Please check your email wwww.uihut@gmail.com to see the Verification code</p>
+          </div>
+        </div>
+        <br></br>
+        <div className='body'>
+          <form id="sendOTPForm" onSubmit={(e) => handleSubmit(e)}>
+          <div>
+      <OTPInput 
+        value={otpValue} 
+        onChange={handleInputChange} 
+        autoFocus 
+        OTPLength={6} 
+        otpType="number" 
+        disabled={false} 
+        secure 
+      />
+      <ResendOTP onResendClick={handleResendClick} />
+    </div>
+            <div className='c f'>          
+            </div>
+            <div class="wrap">
+            <button className='button' type="submit" onClick={verifyOTP2}>
+            Verify OTP
+          </button>
+            </div>
+          </form>          
+        </div>
+      </div>           
+      )} 
     </>
   )
 }
 
-export default Signup ;
+export default Signup;

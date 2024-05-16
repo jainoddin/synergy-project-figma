@@ -6,11 +6,15 @@ import facebook from '../imgs/fb.jpg'
 import insta from'../imgs/insta.jpg'
 import twitter from '../imgs/twitter.png'
 import { useNavigate } from "react-router-dom";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import cookie from "js-cookie";
+import axios from "axios";
 
 
 const Login = () => {
-  const [passwordType, setPasswordType] = useState('password');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const passwordInput = React.useRef(null);
   const toggler = React.useRef(null);
@@ -25,15 +29,31 @@ const Login = () => {
   const signup=()=>{
     navigateFunc("/signup")
   }
-  const Login=()=>{
+  
+
+
+
+  
+  const submitHandler = async (e) => {
+    e.preventDefault();
+  
     try {
+      const response = await axios.post("http://localhost:4000/login", {
+        email,
+        password,
+      });
+      const data = response.data;
+      cookie.set("jwtAuth", data.token);
+      console.log("User Login successfully!");
+      toast.success("Logged in Successfully!");
+      
+      
       navigateFunc("/index")
-      
-    } catch (error) {
-      console.log(error);
-      
+    } catch (err) {
+      console.log(err);
+      toast.error("Invalid Credentials!");
     }
-  }
+  };
 
  
 
@@ -48,6 +68,7 @@ const Login = () => {
 
   return (
     <>
+     <ToastContainer />
       <div style={{overflow:"hidden"}}>
         <div style={{ position: 'relative', height: '50px' }}>
           <button className='btn-1' onClick={handleSkip} style={{ position: 'absolute', bottom: '0' }}>
@@ -63,11 +84,15 @@ const Login = () => {
         <br></br>
         <div className='body'>
           <form onSubmit={solve}>
-            <input type="email" id="first" name="first" placeholder="Enter your Email" required />
+            <input type="email" id="first" placeholder="Enter your Email" value={email}
+                      name="Email"
+                      onChange={(e)=>setEmail(e.target.value)} required />
             <div className="password-field">
             <input 
     type="password" 
-    placeholder="Enter Password" 
+    placeholder="Enter Password" value={password}
+    name="Password"
+    onChange={(e)=>setPassword(e.target.value)}
   />
             </div>
             <div className='c f'>
@@ -76,7 +101,7 @@ const Login = () => {
             </a>
             </div>
             <div class="wrap">
-              <button className='button' onClick={Login} type="submit">
+              <button className='button' onClick={submitHandler} type="submit">
                 Submit
               </button>
             </div>

@@ -11,12 +11,16 @@ const Page_1 = () => {
       document.body.classList.remove('home-bg');
     };
   }, []);
+  
   const navigate = useNavigate();
+
   useEffect(() => {
     setTimeout(() => {
       navigate('/home');
     }, 2000); // 20 seconds
   }, []);
+
+  
   return (
     <div className="page-1-container">
       <h1>Travenor</h1>
