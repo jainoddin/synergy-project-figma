@@ -1,124 +1,117 @@
-.img1{
+.img1 {
+  width: 100%;
+  height: 100vh;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+.page2-home {
+  overflow-x: hidden;
+}
+.txt {
+  text-align: center;
+}
+
+.h5 {
+  color: rgb(128, 125, 125);
+}
+.span {
+  color: rgb(255, 135, 92);
+}
+.btn1 {
+  background: none;
+  border: none;
+  position: absolute;
+  top: 5%;
+  left: 93%;
+  color: rgb(160, 238, 238);
+  font-size: 30px;
+}
+.btn1:hover {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 320px) {
+  .img1 {
     width: 100%;
-    height: 100vh;
+    height: 40vh;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-}
-.page2-home{
-    overflow-x: hidden;
+  }
 
-}
-.txt{
-    text-align: center;
-   
-}
-
-.h5{
-    color: rgb(128, 125, 125);
-}
-.span{
-    color:rgb(255, 135, 92);
-  
-  
-}
-.btn1{
+  .btn1 {
     background: none;
     border: none;
     position: absolute;
     top: 5%;
-    left: 93%;
+    left: 90%;
     color: rgb(160, 238, 238);
-    font-size: 30px;
-}
-.btn1:hover{
-    cursor: pointer;
-}
-
-
-@media screen and (max-width: 320px) {
-    .img1{
-        width: 100%;
-        height: 40vh;
-        border-bottom-left-radius: 20px;
-        border-bottom-right-radius: 20px;
-
-    }
-    
-   
-    .btn1{
-        background: none;
-        border: none;
-        position: absolute;
-        top: 5%;
-        left: 90%;
-        color: rgb(160, 238, 238);
-        font-size: 10px;
-    }
-    body {
-        position: relative;
-      }
-    
-    }
-.underline-mask {
+    font-size: 10px;
+  }
+  body {
     position: relative;
-    height: 2rem;
-    background-color: white; /* Add this line */
   }
-  
-  .underline-mask:after {
-    content: '';
-    position: absolute;
-    top: 95%;
-    width: 150%;
-    aspect-ratio: 3 / 1;
-    left: 50%;
-    transform: translate(-50%, 0);
-    border-radius: 50%;
-    border: 4px solid#f17e1f;
-    /* Use a conic gradient mask to hide and show the bits you want */
-    --spread: 130deg;
-    --start: -60deg; /* Change this line */
-  
-    mask: conic-gradient(from var(--start), white 0 var(--spread), transparent var(--spread));
-  }
-  .underlined {
-    /*   background: red; */
-      position: relative;
-    }
-    .dot {
-        cursor: pointer;
-        height: 15px;
-        width: 15px;
-        margin: 0 2px;
-        background-color: #94b5fc;
-        border-radius: 50%;
-        display: inline-block;
-        transition: background-color 0.6s ease;
+}
+.underline-mask {
+  position: relative;
+  height: 2rem;
+  background-color: white; /* Add this line */
+}
 
-      }
-      .a{
-        text-align: center;
-      }
-      .active, .dot:hover {
-        background-color: blue;
-        border-radius: 25px;
-        width: 50px;
-        height: 12px;
-      }
-      .btn2{
-        background-color: blue;
-        align-items: center;
- 
-        color: white;
-        text-decoration: none;
-        font-size: 16px;
-        position: relative;
-        border: none;
-        border-radius: 10px;
-        padding: 10px;
-        padding-left: 70px;
-        padding-right: 70px;
+.underline-mask:after {
+  content: "";
+  position: absolute;
+  top: 95%;
+  width: 150%;
+  aspect-ratio: 3 / 1;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border-radius: 50%;
+  border: 4px solid#f17e1f;
+  /* Use a conic gradient mask to hide and show the bits you want */
+  --spread: 130deg;
+  --start: -60deg; /* Change this line */
 
-        
+  mask: conic-gradient(
+    from var(--start),
+    white 0 var(--spread),
+    transparent var(--spread)
+  );
+}
+.underlined {
+  /*   background: red; */
+  position: relative;
+}
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #94b5fc;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+.a {
+  text-align: center;
+}
+.active,
+.dot:hover {
+  background-color: blue;
+  border-radius: 25px;
+  width: 50px;
+  height: 12px;
+}
+.btn2 {
+  background-color: blue;
+  align-items: center;
 
-    }
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  position: relative;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  padding-left: 70px;
+  padding-right: 70px;
+}

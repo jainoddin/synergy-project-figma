@@ -1,6 +1,6 @@
 import img1 from "../imgs/img-1.jpeg";
 import { useNavigate } from "react-router-dom";
-import React from 'react';
+import React from "react";
 
 function Page2() {
   const navigateFunc = useNavigate();
@@ -32,13 +32,15 @@ function Page2() {
         </h5>
       </div>
       <div style={{ textAlign: "center" }} className="a">
-        <span className="dot active" ></span>
-        <span className="dot" ></span>
-        <span className="dot" ></span>
+        <span className="dot active"></span>
+        <span className="dot"></span>
+        <span className="dot"></span>
       </div>
       <br></br>
       <div className="b" style={{ display: "flex", justifyContent: "center" }}>
-        <button className="btn2" onClick={handleSkip}>Get Started</button>
+        <button className="btn2" onClick={handleSkip}>
+          Get Started
+        </button>
       </div>
     </div>
   );

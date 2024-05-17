@@ -1,33 +1,31 @@
-import React, { useState,useEffect,useRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft,faEnvelopeOpenText} from "@fortawesome/free-solid-svg-icons";
+import React, { useState, useEffect, useRef } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faAngleLeft,
+  faEnvelopeOpenText,
+} from "@fortawesome/free-solid-svg-icons";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import emailjs from 'emailjs-com';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import emailjs from "emailjs-com";
 import OTPInput, { ResendOTP } from "otp-input-react";
 import cookie from "js-cookie";
 import axios from "axios";
-import "./ForgotPassword.css"
+import "./ForgotPassword.css";
 
-
-
-const ForgotPassword  = () => { 
+const ForgotPassword = () => {
   const popupRef = useRef(null);
 
-    const [otp, setOtp] = useState('');
-    const[ConfrmPassword,setConfrmPassword]=useState(false)
-    const [email, setEmail] = useState('');
-    const [otpSent, setOtpSent] = useState(1);
-    const [sendingOTP, setSendingOTP] = useState(false);
-    const [otpValue, setOtpValue] = useState(""); 
-    const [emailValue, setemailValue] = useState('');
-  
+  const [otp, setOtp] = useState("");
+  const [ConfrmPassword, setConfrmPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [otpSent, setOtpSent] = useState(1);
+  const [sendingOTP, setSendingOTP] = useState(false);
+  const [otpValue, setOtpValue] = useState("");
+  const [emailValue, setemailValue] = useState("");
 
-
-
-
+  console.log("emai", email);
 
   const handleInputChange = (text) => {
     setOtpValue(text); // Update OTP value state
@@ -35,7 +33,7 @@ const ForgotPassword  = () => {
   const navigateFunc = useNavigate();
 
   const handleSkip = () => {
-    navigateFunc("/Login")
+    navigateFunc("/Login");
   };
 
   const handleSkipp = () => {
@@ -49,42 +47,41 @@ const ForgotPassword  = () => {
   });
 
   const sendOTPToEmail = (email, otp) => {
-    const serviceId = 'service_tdbb3rg';
-    const templateId = 'template_j773w8h';
-    const userId = 'G-5XyfNHUsUyFnEgU';
-    var params ={
+    const serviceId = "service_tdbb3rg";
+    const templateId = "template_j773w8h";
+    const userId = "G-5XyfNHUsUyFnEgU";
+    var params = {
       otp: otp,
-      from_name:"figma_project",
-      toemail:email,
-    }
+      from_name: "figma_project",
+      toemail: email,
+    };
 
     emailjs.send(serviceId, templateId, params, userId).then(
       (response) => {
-        console.log('Email sent successfully!', response.status);
+        console.log("Email sent successfully!", response.status);
       },
       (error) => {
-        console.log('Error sending email:', error);
+        console.log("Error sending email:", error);
       }
     );
-  }
+  };
 
   const generateOTP = () => {
     const otp = Math.floor(100000 + Math.random() * 900000);
     return otp;
-  }
-  const forgotpassword=()=>{
-    navigateFunc("/forgotpassword")
-  }
-  const signin=()=>{
-    navigateFunc("/Login")
-  }
+  };
+  const forgotpassword = () => {
+    navigateFunc("/forgotpassword");
+  };
+  const signin = () => {
+    navigateFunc("/Login");
+  };
 
-  const handleSubmitt= async (e)=>{
-   
-      if (popupRef.current) {
-        popupRef.current.classList.add('open');
-      }
-    
+  const handleSubmitt = async (e) => {
+    if (popupRef.current) {
+      popupRef.current.classList.add("open");
+    }
+
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:4000/emailcheck", {
@@ -93,19 +90,19 @@ const ForgotPassword  = () => {
       const data = response.data;
       cookie.set("jwtAuth", data.token);
       toast.success("OTP is sent your Email Address");
-      
-      handleSubmit(e);  
+
+      handleSubmit(e);
     } catch (err) {
       console.log(err);
       toast.error("Invalid Credentials!");
-    }  
-  }
+    }
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
-    const emailValue = e.target.email.value; 
+    const emailValue = e.target.email.value;
     setemailValue(emailValue);
     setEmail(emailValue);
-    setOtp('');
+    setOtp("");
     setSendingOTP(true);
     const otpValue = generateOTP();
     setOtp(otpValue);
@@ -113,207 +110,224 @@ const ForgotPassword  = () => {
     setSendingOTP(false);
     setTimeout(() => {
       setOtpSent(2);
-
-    }, 2000);  
-      }
+    }, 2000);
+  };
 
   const handleResendClick = () => {
-    setOtp('');
+    setOtp("");
     setEmail(email);
     setSendingOTP(true);
     const otpValue = generateOTP();
     setOtp(otpValue);
-    sendOTPToEmail(email,otpValue);
+    sendOTPToEmail(email, otpValue);
     setSendingOTP(false);
     setTimeout(() => {
       setOtpSent(2);
-
     }, 2000);
-   
   };
-  
-  const otpcomper=otp
-  const verifyOTP2 =async (e)=>{
-    e.preventDefault();  
+
+  const otpcomper = otp;
+  const verifyOTP2 = async (e) => {
+    e.preventDefault();
     if (otpValue == otpcomper) {
-     setOtpSent(3)
+      setOtpSent(3);
+    } else {
+      toast.error("invaild OTP");
     }
-    else{
-      toast.error("invaild OTP")
-    }
-  }
+  };
 
   //conf
 
   const [password, setPassword] = useState("");
-  const [newPassword, setNewPassword] = useState('');
- 
+  const [newPassword, setNewPassword] = useState("");
 
   const passwordInput = React.useRef(null);
   const toggler = React.useRef(null);
 
-  
-  
-
   const handleSubmittt = async (event) => {
     event.preventDefault();
-    if(password===newPassword){
-        
-    
+    if (password === newPassword) {
+      try {
+        const response = await axios.post(
+          "http://localhost:4000/updatepassword",
+          {
+            email: email,
+            newPassword,
+          }
+        );
 
+        if (response.status === 200) {
+          toast.success("Password changed successfully");
 
-    try {
-      const response = await axios.post('http://localhost:4000/updatepassword', {
-        email:email,
-        newPassword,
-      });
-      
-      if (response.status === 200) {
-        toast.success("Password changed successfully");
-       
           setTimeout(() => {
-            navigateFunc("/Login")
-
+            navigateFunc("/Login");
           }, 2000); // 20 seconds
-       
-      
-        
-      } else {
+        } else {
+          toast.error("Failed to change password");
+        }
+      } catch (error) {
+        console.error("Error:", error);
         toast.error("Failed to change password");
       }
-    } catch (error) {
-      console.error('Error:', error);
-      toast.error("Failed to change password");
+    } else {
+      toast.error("Password not matched");
     }
-  }else{
-    toast.error("Password not matched")
-  }
   };
-
-
- 
-
 
   return (
     <>
-    <ToastContainer></ToastContainer>
-    <navigateFunc></navigateFunc>
-    {otpSent==1?  ( <div style={{overflow:"hidden"}}>
-        <div style={{ position: 'relative', height: '50px' }}>
-          <button className='btn-1' onClick={handleSkip} style={{ position: 'absolute', bottom: '0' }}>
-            <FontAwesomeIcon style={{ fontSize: "150%" }} icon={faAngleLeft} />
-          </button>
-        </div>
-        <div className='text-content'>
-          <h1>Forgot password</h1>
-          <div>
-            <p>Enter your email account to reset your password</p>
+      <ToastContainer></ToastContainer>
+      <navigateFunc></navigateFunc>
+      {otpSent == 1 ? (
+        <div style={{ overflow: "hidden" }}>
+          <div style={{ position: "relative", height: "50px" }}>
+            <button
+              className="btn-1"
+              onClick={handleSkip}
+              style={{ position: "absolute", bottom: "0" }}
+            >
+              <FontAwesomeIcon
+                style={{ fontSize: "150%" }}
+                icon={faAngleLeft}
+              />
+            </button>
+          </div>
+          <div className="text-content">
+            <h1>Forgot password</h1>
+            <div>
+              <p>Enter your email account to reset your password</p>
+            </div>
+          </div>
+          <br></br>
+          <div className="body">
+            <form id="sendOTPForm" onSubmit={handleSubmitt}>
+              <input
+                type="email"
+                id="email"
+                placeholder="Enter your Email"
+                value={email}
+                name="Email"
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <div class="wrap">
+                <button className="button" type="submit" disabled={sendingOTP}>
+                  {sendingOTP ? "Sending OTP..." : "Reset Password"}
+                </button>
+              </div>
+            </form>
+            <div className="recovery-popup" ref={popupRef}>
+              <div className="popup">
+                <div className="round-icon ">
+                  <FontAwesomeIcon icon={faEnvelopeOpenText}></FontAwesomeIcon>
+                </div>
+                <h5>Check your email</h5>
+                <p>We have send passwod recovery instruction to email</p>
+              </div>
+            </div>
           </div>
         </div>
-        <br></br>
-        <div className='body'>
-          <form id="sendOTPForm" onSubmit={handleSubmitt}>
-            <input type="email" id="email" placeholder="Enter your Email"   value={email}
-                      name="Email"
-                      onChange={(e)=>setEmail(e.target.value)} required />        
-            <div class="wrap">
-            <button className='button'   type="submit" disabled={sendingOTP}>
-          {sendingOTP ? 'Sending OTP...' : 'Reset Password'}
-        </button>
+      ) : otpSent == 2 ? (
+        <div style={{ overflow: "hidden" }}>
+          <div style={{ position: "relative", height: "50px" }}>
+            <button
+              className="btn-1"
+              onClick={handleSkipp}
+              style={{ position: "absolute", bottom: "0" }}
+            >
+              <FontAwesomeIcon
+                style={{ fontSize: "150%" }}
+                icon={faAngleLeft}
+              />
+            </button>
+          </div>
+          <div className="text-content">
+            <h1>Otp Verification</h1>
+            <div>
+              <p>
+                Please check your email wwww.uihut@gmail.com to see the
+                Verification code
+              </p>
             </div>
-          </form>
-          <div className='recovery-popup' ref={popupRef}>
-          <div className='popup'>
-            
-            <div className='round-icon '><FontAwesomeIcon icon={faEnvelopeOpenText}></FontAwesomeIcon></div>
-            <h5>Check your email</h5>
-            <p>We have send passwod recovery instruction to email</p>
-            </div> 
-        </div>
-        </div>
-      </div>
-           ):otpSent==2 ?  (
-            <div style={{overflow:"hidden"}}>
-        <div style={{ position: 'relative', height: '50px' }}>
-          <button className='btn-1' onClick={handleSkipp} style={{ position: 'absolute', bottom: '0' }}>
-            <FontAwesomeIcon style={{ fontSize: "150%" }} icon={faAngleLeft} />
-          </button>
-        </div>
-        <div className='text-content'>
-          <h1>Otp Verification</h1>
-          <div>
-            <p>Please check your email wwww.uihut@gmail.com to see the Verification code</p>
+          </div>
+          <br></br>
+          <div className="body">
+            <form id="sendOTPForm" onSubmit={(e) => handleSubmit(e)}>
+              <div>
+                <OTPInput
+                  value={otpValue}
+                  onChange={handleInputChange}
+                  autoFocus
+                  OTPLength={6}
+                  otpType="number"
+                  disabled={false}
+                  secure
+                />
+                <ResendOTP onResendClick={handleResendClick} />
+              </div>
+              <div className="c f"></div>
+              <div class="wrap">
+                <button className="button" type="submit" onClick={verifyOTP2}>
+                  Verify OTP
+                </button>
+              </div>
+            </form>
           </div>
         </div>
-        <br></br>
-        <div className='body'>
-          <form id="sendOTPForm" onSubmit={(e) => handleSubmit(e)}>
-          <div>
-      <OTPInput 
-        value={otpValue} 
-        onChange={handleInputChange} 
-        autoFocus 
-        OTPLength={6} 
-        otpType="number" 
-        disabled={false} 
-        secure 
-      />
-      <ResendOTP onResendClick={handleResendClick} />
-    </div>
-            <div className='c f'>          
+      ) : (
+        <div style={{ overflow: "hidden" }}>
+          <navigateFunc></navigateFunc>
+          <div style={{ position: "relative", height: "50px" }}>
+            <button
+              className="btn-1"
+              onClick={handleSkipp}
+              style={{ position: "absolute", bottom: "0" }}
+            >
+              <FontAwesomeIcon
+                style={{ fontSize: "150%" }}
+                icon={faAngleLeft}
+              />
+            </button>
+          </div>
+          <div className="text-content">
+            <h1>Change password</h1>
+            <div>
+              <p>Enter your NewPassword and ConfrmPassword</p>
             </div>
-            <div class="wrap">
-            <button className='button' type="submit" onClick={verifyOTP2}>
-            Verify OTP
-          </button>
-            </div>
-          </form>
-                   
-        </div>
-      </div>           
-      ): (
-        
-         <div style={{overflow:"hidden"}}>
-           <navigateFunc></navigateFunc>
-         <div style={{ position: 'relative', height: '50px' }}>
-           <button className='btn-1' onClick={handleSkipp} style={{ position: 'absolute', bottom: '0' }}>
-             <FontAwesomeIcon style={{ fontSize: "150%" }} icon={faAngleLeft} />
-           </button>
-         </div>
-         <div className='text-content'>
-           <h1>Change password</h1>
-           <div>
-             <p>Enter your NewPassword and ConfrmPassword</p>
-           </div>
-         </div>
-         <br></br>
-         <div className='body'>
-           <form onSubmit={handleSubmittt}>
-             <input type="text" id="first" placeholder="Enter New Password" value={password}
-                       name="Email"
-                       onChange={(e)=>setPassword(e.target.value)} required />
-             <div className="password-field">
-               <input 
-                 type="password" 
-                 placeholder="Enter ConfrmPassword" value={newPassword}
-                 name="Password"
-                 onChange={(e)=>setNewPassword(e.target.value)}
-               />
-             </div>
- 
-             <div class="wrap">
-               <button className='button' type="submit">
-                 Submit
-               </button>
-             </div>
-           </form>
-         </div>
-       </div>
+          </div>
+          <br></br>
+          <div className="body">
+            <form onSubmit={handleSubmittt}>
+              <input
+                type="text"
+                id="first"
+                placeholder="Enter New Password"
+                value={password}
+                name="Email"
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <div className="password-field">
+                <input
+                  type="password"
+                  placeholder="Enter ConfrmPassword"
+                  value={newPassword}
+                  name="Password"
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
+              </div>
 
+              <div class="wrap">
+                <button className="button" type="submit">
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       )}
     </>
-  )
-}
+  );
+};
 
 export default ForgotPassword;
-

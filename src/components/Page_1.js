@@ -1,31 +1,30 @@
-import "./Page_1.css"
-import React, { useEffect } from 'react';
-import {useNavigate} from "react-router-dom"
-
-
+import "./Page_1.css";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Page_1 = () => {
+  const [color, setColor] = useState("blue");
+
   useEffect(() => {
-    document.body.classList.add('home-bg');
+    document.body.style.backgroundColor = color;
     return () => {
-      document.body.classList.remove('home-bg');
+      document.body.style.backgroundColor = "";
     };
-  }, []);
-  
+  }, [color]);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     setTimeout(() => {
-      navigate('/home');
+      navigate("/home");
     }, 2000); // 20 seconds
   }, []);
 
-  
   return (
     <div className="page-1-container">
       <h1>Travenor</h1>
     </div>
-  )
-}
+  );
+};
 
-export default Page_1
+export default Page_1;

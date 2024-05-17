@@ -1,28 +1,20 @@
 .btn-1 {
-    border: none;
-    border-radius: 50%;
-    padding: 10px 15px;
-    position: relative;
-    left: 5%;
-  }
-  .text-content{
-    justify-content: center;
-    text-align: center;
-  }
-  /*style.css*/
+  border: none;
+  border-radius: 50%;
+  padding: 10px 15px;
+  position: relative;
+  left: 5%;
+}
+.text-content {
+  justify-content: center;
+  text-align: center;
+}
+/*style.css*/
 .body {
-  
   align-items: center;
   justify-content: center;
   flex-direction: column;
 }
-
-
-
-
-
-
-
 
 input {
   display: block;
@@ -36,9 +28,8 @@ input {
   left: 5%;
 }
 
-
 @media screen and (max-width: 1440px) {
-  .c{
+  .c {
     position: relative;
     left: 87%;
   }
@@ -57,94 +48,84 @@ input {
     flex-wrap: wrap;
     position: relative;
     left: 46%;
-   
-  
   }
   #imgg {
     width: 2em;
     border-radius: 25px;
-   position: relative;
+    position: relative;
   }
-  .p{
+  .p {
     position: relative;
     left: 43%;
     font-size: 90%;
   }
-@media screen and (max-width: 768px) {
-  .c{
-    position: relative;
-    left: 82%;
-    
-  }
-  .password-field #toggler {
-    position: absolute;
-    right: 60px;
-    top: 35%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    margin-left: -30px;
-    display: flex;
-  }
-  #social {
-    width: 20%;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    position: relative;
-    left: 40%;
-   
-  
-  }
-  #imgg {
-    width: 2em;
-    border-radius: 25px;
-   position: relative;
-  }
-  .p{
-    position: relative;
-    left: 39%;
-    font-size: 90%;
-  }
-  
-  @media screen and (max-width: 425px) {
-    .f{
+  @media screen and (max-width: 768px) {
+    .c {
       position: relative;
-      left: 63%;
+      left: 82%;
     }
     .password-field #toggler {
       position: absolute;
-      right: 30px;
-      top: 52%;
+      right: 60px;
+      top: 35%;
       transform: translateY(-50%);
       cursor: pointer;
       margin-left: -30px;
+      display: flex;
     }
     #social {
-      width: 40%;
+      width: 20%;
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
       position: relative;
-      left: 30%;
-     
-    
+      left: 40%;
     }
     #imgg {
       width: 2em;
       border-radius: 25px;
-     position: relative;
-    }
-    .p{
       position: relative;
-      left: 25%;
+    }
+    .p {
+      position: relative;
+      left: 39%;
       font-size: 90%;
     }
-    
+
+    @media screen and (max-width: 425px) {
+      .f {
+        position: relative;
+        left: 63%;
+      }
+      .password-field #toggler {
+        position: absolute;
+        right: 30px;
+        top: 52%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        margin-left: -30px;
+      }
+      #social {
+        width: 40%;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        position: relative;
+        left: 30%;
+      }
+      #imgg {
+        width: 2em;
+        border-radius: 25px;
+        position: relative;
+      }
+      .p {
+        position: relative;
+        left: 25%;
+        font-size: 90%;
+      }
+    }
   }
 }
-}
-
-
 
 .button {
   padding: 10px;
@@ -167,7 +148,7 @@ input {
   align-items: center;
 }
 
-svg{
+svg {
   size: 10px;
 }
 #hero {
@@ -176,6 +157,4 @@ svg{
   justify-content: center;
   align-items: center;
   height: 300px;
-  
 }
-

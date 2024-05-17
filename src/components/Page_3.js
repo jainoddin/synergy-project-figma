@@ -1,6 +1,6 @@
 import img1 from "../imgs/img-2.jpeg";
 import { useNavigate } from "react-router-dom";
-import React from 'react';
+import React from "react";
 
 function Page3() {
   const navigateFunc = useNavigate();
@@ -27,17 +27,20 @@ function Page3() {
           </span>{" "}
         </h1>
         <h5 className="h5">
-          To get best of your adventure you just need to leave and go where you like. we are <br></br> waitingfor you
+          To get best of your adventure you just need to leave and go where you
+          like. we are <br></br> waitingfor you
         </h5>
       </div>
       <div style={{ textAlign: "center" }} className="a">
-        <span className="dot" ></span>
-        <span className="dot active" ></span>
-        <span className="dot" ></span>
+        <span className="dot"></span>
+        <span className="dot active"></span>
+        <span className="dot"></span>
       </div>
       <br></br>
       <div className="b" style={{ display: "flex", justifyContent: "center" }}>
-        <button className="btn2" onClick={handleSkip}>Next</button>
+        <button className="btn2" onClick={handleSkip}>
+          Next
+        </button>
       </div>
     </div>
   );

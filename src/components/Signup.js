@@ -44,9 +44,9 @@ const Signup  = () => {
   });
 
   const sendOTPToEmail = (email, otp) => {
-    const serviceId = 'service_bz75du9';
-    const templateId = 'template_nzhj6bn';
-    const userId = 'yyZrouw_8ZNT_cEge';
+    const serviceId = 'service_tdbb3rg';
+    const templateId = 'template_j773w8h';
+    const userId = 'G-5XyfNHUsUyFnEgU';
     var params ={
       otp: otp,
       from_name:"jainoddin_project",
