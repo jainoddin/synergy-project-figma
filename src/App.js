@@ -11,6 +11,7 @@ import Login from './components/Login';
 import ForgotPassword from './components/ForgotPassword';
 import Signup from './components/Signup';
 import Home from './components/indexpages/Home';
+import Details from './components/indexpages/Details';
 
 
 function App() {
@@ -28,6 +29,8 @@ function App() {
         <Route path='/forgotpassword' element={<ForgotPassword></ForgotPassword>}></Route>
         <Route path="/signup" element={<Signup></Signup>} ></Route>
         <Route path="/index" element={<Home></Home>} ></Route>
+        <Route path="/Details" element={<Details></Details>} ></Route>
+
 
 
 

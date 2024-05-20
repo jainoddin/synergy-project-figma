@@ -26,11 +26,11 @@
     display: flex;
     align-items: center;
     position: absolute;
-    top: 109%;
+    top: 83%;
     background-color: rgb(238, 235, 235);
-    border-top-left-radius: 180%;
-    border-top-right-radius: 180%;
-    height: 20%;
+    border-top-left-radius: 300%;
+    border-top-right-radius: 300%;
+    height: 10%;
   }
 
   ul {
@@ -56,62 +56,77 @@
     transition: 1s;
   }
   body {
-    overflow: hidden;
+    overflow:hidden;
   }
   .avatar {
     position: relative;
-    left: -10px;
+    left: -13px;
   }
-  .mid-background{
-    background-color: rgb(238, 235, 235);
-    padding: 15px;
+  .top-contant{
+    overflow: hidden;
   }
-  
-
-
-
-
-
-
-
 
   .avatar-group {
     display: flex;
     flex-wrap: wrap;
     margin-left: 0rem; /* -space-x-6 */
   }
-  
+
   .rtl .avatar-group {
     margin-left: 0;
     margin-right: 0rem; /* rtl:space-x-reverse */
   }
-  
+
   .avatar {
     display: inline-block;
-    margin-left: 0rem; 
+    margin-left: 0rem;
     /* -space-x-6 */
   }
-  
+
   .avatar:first-child {
     margin-left: 0;
   }
-  
+  .mid-background {
+    display: flex;
+    overflow: auto;
+    font-size: 0px;
+   
+  }
+  .mid-background:hover{
+    display: flex;
+    
+  }
+
   .avatar.placeholder {
     background-color: #ddd; /* bg-neutral */
     color: #666;
-    border-radius: 100%; /* text-neutral-content */
+    border-radius: 100%;
+    height: 20px;
+    position: relative;
+    left: 30%;
+    margin-top: -40%; 
   }
-  
+
   .avatar.placeholder span {
-    font-size: 1.5rem;
+    font-size: 1.0rem;
   }
-  
+
   .w-12 {
     width: 12px;
     /* 3rem = 48px, assuming 1rem = 16px */
   }
-  .bg-neutral{
+  .bg-neutral {
     border-radius: 100%;
+    position: relative;
+    padding-top: 8%;
+   
   }
+  .bbb {
+    border: none;
+    background-color: white;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    margin-left: 15px;
+    
+  }
+ 
 }
-
