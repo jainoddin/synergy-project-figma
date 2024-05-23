@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Home.css";
 import av from "../../imgs/av.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,33 +14,70 @@ import {
 import img1 from "../../imgs/imgg1.jpeg";
 import { useNavigate } from "react-router-dom";
 import star from "../../imgs/star.png";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
-const Home = () => {
+const Home = (props) => {
   const [avatar, setavatar] = useState(av);
   const navigateFunc = useNavigate();
+  const [DetailsArray, setDetailsArray] = useState([]);
+  const [names, setName] = useState([]);
+  const [id, setid] = useState("");
+
+  const { email } = useParams();
+  console.log("cccc", email);
 
   const showview = () => {
-    navigateFunc("/Login");
+    navigateFunc("/view");
   };
+
+  const fetchDetails = async () => {
+    try {
+      const response = await axios.get("http://localhost:4000/alldetails");
+      setDetailsArray(response.data);
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchDetails();
+  }, []);
+
+  const fetchNameDetails = async () => {
+    try {
+      const response = await axios.get(`http://localhost:4000/signupname/${email}`);
+      setName(response.data.name);
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchNameDetails();
+  }, []);
+
   return (
     <div className="top-contant">
       <div>
         <div class="avatar">
           <div
             class="logo-content"
-            style={{ display: "flex", alignItems: "flex-start" }}
+            style={{ display: "flex", alignItems: "flex-start", }}
           >
             <img
               className="logo-img"
               src={avatar}
               style={{ borderRadius: "50%" }}
             />
-            <p
-              style={{ margin: 7, width: "auto", fontSize: "13px" }}
-              className="h5-text"
-            >
-              jain
-            </p>
+            
+              <p
+                style={{ margin: 7, width: "auto", fontSize: "8px" }}
+                className="h5-text"
+              >
+                {names}
+              </p>
+            
           </div>
           <button className="btn-notic">
             <FontAwesomeIcon
@@ -87,310 +124,127 @@ const Home = () => {
         className="mid-background"
         style={{ display: "flex", height: "400px" }}
       >
-        <button
-          style={{
-            marginBottom: "-10px",
-            height: "268px",
-            borderRadius: "10px",
-          }}
-          className="bbb"
-        >
-          <div>
-            <img
-              src={img1}
-              style={{
-                fontSize: "20px",
-                width: "170px",
-                borderRadius: "15px",
-                padding: "5px",
-              }}
-            ></img>
-          </div>
-          <div
+        {DetailsArray.map((details) => (
+          <button
             style={{
-              display: "flex",
-              fontSize: "14px",
-              position: "relative",
-              top: "-15px",
-              left: "10px",
+              marginBottom: "-10px",
+              height: "268px",
+              borderRadius: "10px",
             }}
+            className="bbb"
           >
-            <h4>Niladri Reservoir</h4>
-            <p
+            <div>
+              <img
+                src={details.hotel_img}
+                style={{
+                  fontSize: "20px",
+                  width: "170px",
+                  borderRadius: "15px",
+                  padding: "5px",
+                  height: "190px",
+                }}
+              ></img>
+            </div>
+            <div
               style={{
-                justifyContent: "center",
-                paddingTop: "3px",
-                marginLeft: "10px",
+                display: "flex",
+                fontSize: "14px",
+                position: "relative",
+                top: "-15px",
+                left: "10px",
               }}
             >
-              <img src={star} style={{ width: "15px" }}></img>
-              <span style={{ position: "relative", top: "-10%" }}>4.7</span>
-            </p>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              fontSize: "11px",
-              position: "relative",
-              top: "-35px",
-              left: "10px",
-            }}
-          >
-            <p style={{ display: "flex" }}>
-              {" "}
-              <FontAwesomeIcon
-                icon={faLocationDot}
-                style={{ fontSize: "10px" }}
-              />
-              <span>&nbsp;</span>tekergat,Sunamgni
-            </p>
-            <div>
-              <div
-                class="avatar-group"
-                style={{ paddingTop: "6px", marginLeft: "25px" }}
+              <h4>{details.hotel_name}</h4>
+              <p
+                style={{
+                  justifyContent: "center",
+                  paddingTop: "3px",
+                  marginLeft: "10px",
+                }}
               >
-                <div class="avatar">
-                  <div style={{ width: "12px" }}>
-                    <img
-                      style={{ borderRadius: "100%", width: "20px" }}
-                      src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                    />
+                <img src={star} style={{ width: "15px" }}></img>
+                <span style={{ position: "relative", top: "-10%" }}>
+                  {details.hotel_rating}
+                </span>
+              </p>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                fontSize: "11px",
+                position: "relative",
+                top: "-35px",
+                left: "10px",
+              }}
+            >
+              <p style={{ display: "flex" }}>
+                {" "}
+                <FontAwesomeIcon
+                  icon={faLocationDot}
+                  style={{ fontSize: "10px" }}
+                />
+                <span>&nbsp;</span>
+                <p
+                  style={{
+                    fontSize: "8px",
+                    position: "absolute",
+                    top: "10%",
+                    left: "10px",
+                  }}
+                >
+                  {details.hotel_location}
+                </p>
+              </p>
+              <div>
+                <div
+                  class="avatar-group"
+                  style={{
+                    paddingTop: "6px",
+                    marginLeft: "25px",
+                    position: "absolute",
+                    left: "55%",
+                  }}
+                >
+                  <div class="avatar">
+                    <div style={{ width: "12px" }}>
+                      <img
+                        style={{ borderRadius: "100%", width: "20px" }}
+                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                      />
+                    </div>
                   </div>
-                </div>
-                <div class="avatar">
-                  <div class="w-12">
-                    <img
-                      style={{ borderRadius: "100%", width: "20px" }}
-                      src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                    />
+                  <div class="avatar">
+                    <div class="w-12">
+                      <img
+                        style={{ borderRadius: "100%", width: "20px" }}
+                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                      />
+                    </div>
                   </div>
-                </div>
-                <div class="avatar">
-                  <div class="w-12">
-                    <img
-                      style={{ borderRadius: "100%", width: "20px" }}
-                      src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                    />
+                  <div class="avatar">
+                    <div class="w-12">
+                      <img
+                        style={{ borderRadius: "100%", width: "20px" }}
+                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                      />
+                    </div>
                   </div>
-                </div>
-                <div class="avatar placeholder">
-                  <div
-                    class="w-12 bg-neutral text-neutral-content"
-                    className="bg-neutral"
-                    style={{ margin: "2px" }}
-                  >
-                    <span style={{ fontSize: "10px", marginTop: "100%" }}>
-                      +99
-                    </span>
+                  <div class="avatar placeholder">
+                    <div
+                      class="w-12 bg-neutral text-neutral-content"
+                      className="bg-neutral"
+                      style={{ margin: "2px" }}
+                    >
+                      <span style={{ fontSize: "10px", marginTop: "100%" }}>
+                        +99
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </button>
-        <button
-          style={{
-            marginBottom: "-10px",
-            height: "268px",
-            borderRadius: "10px",
-          }}
-          className="bbb"
-        >
-          <div>
-            <img
-              src={img1}
-              style={{
-                fontSize: "20px",
-                width: "170px",
-                borderRadius: "15px",
-                padding: "5px",
-              }}
-            ></img>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              fontSize: "14px",
-              position: "relative",
-              top: "-15px",
-              left: "10px",
-            }}
-          >
-            <h4>Niladri Reservoir</h4>
-            <p
-              style={{
-                justifyContent: "center",
-                paddingTop: "3px",
-                marginLeft: "10px",
-              }}
-            >
-              <img src={star} style={{ width: "15px" }}></img>
-              <span style={{ position: "relative", top: "-10%" }}>4.7</span>
-            </p>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              fontSize: "11px",
-              position: "relative",
-              top: "-35px",
-              left: "10px",
-            }}
-          >
-            <p style={{ display: "flex" }}>
-              {" "}
-              <FontAwesomeIcon
-                icon={faLocationDot}
-                style={{ fontSize: "10px" }}
-              />
-              <span>&nbsp;</span>tekergat,Sunamgni
-            </p>
-            <div>
-              <div
-                class="avatar-group"
-                style={{ paddingTop: "6px", marginLeft: "25px" }}
-              >
-                <div class="avatar">
-                  <div style={{ width: "12px" }}>
-                    <img
-                      style={{ borderRadius: "100%", width: "20px" }}
-                      src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                    />
-                  </div>
-                </div>
-                <div class="avatar">
-                  <div class="w-12">
-                    <img
-                      style={{ borderRadius: "100%", width: "20px" }}
-                      src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                    />
-                  </div>
-                </div>
-                <div class="avatar">
-                  <div class="w-12">
-                    <img
-                      style={{ borderRadius: "100%", width: "20px" }}
-                      src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                    />
-                  </div>
-                </div>
-                <div class="avatar placeholder">
-                  <div
-                    class="w-12 bg-neutral text-neutral-content"
-                    className="bg-neutral"
-                    style={{ margin: "2px" }}
-                  >
-                    <span style={{ fontSize: "10px", marginTop: "100%" }}>
-                      +99
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </button>
-
-        <button
-          style={{
-            marginBottom: "-10px",
-            height: "268px",
-            borderRadius: "10px",
-          }}
-          className="bbb"
-        >
-          <div>
-            <img
-              src={img1}
-              style={{
-                fontSize: "20px",
-                width: "170px",
-                borderRadius: "15px",
-                padding: "5px",
-              }}
-            ></img>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              fontSize: "14px",
-              position: "relative",
-              top: "-15px",
-              left: "10px",
-            }}
-          >
-            <h4>Niladri Reservoir</h4>
-            <p
-              style={{
-                justifyContent: "center",
-                paddingTop: "3px",
-                marginLeft: "10px",
-              }}
-            >
-              <img src={star} style={{ width: "15px" }}></img>
-              <span style={{ position: "relative", top: "-10%" }}>4.7</span>
-            </p>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              fontSize: "11px",
-              position: "relative",
-              top: "-35px",
-              left: "10px",
-            }}
-          >
-            <p style={{ display: "flex" }}>
-              {" "}
-              <FontAwesomeIcon
-                icon={faLocationDot}
-                style={{ fontSize: "10px" }}
-              />
-              <span>&nbsp;</span>tekergat,Sunamgni
-            </p>
-            <div>
-              <div
-                class="avatar-group"
-                style={{ paddingTop: "6px", marginLeft: "25px" }}
-              >
-                <div class="avatar">
-                  <div style={{ width: "12px" }}>
-                    <img
-                      style={{ borderRadius: "100%", width: "20px" }}
-                      src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                    />
-                  </div>
-                </div>
-                <div class="avatar">
-                  <div class="w-12">
-                    <img
-                      style={{ borderRadius: "100%", width: "20px" }}
-                      src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                    />
-                  </div>
-                </div>
-                <div class="avatar">
-                  <div class="w-12">
-                    <img
-                      style={{ borderRadius: "100%", width: "20px" }}
-                      src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                    />
-                  </div>
-                </div>
-                <div class="avatar placeholder">
-                  <div
-                    class="w-12 bg-neutral text-neutral-content"
-                    className="bg-neutral"
-                    style={{ margin: "2px" }}
-                  >
-                    <span style={{ fontSize: "10px", marginTop: "100%" }}>
-                      +99
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </button>
+          </button>
+        ))}
       </div>
 
       <div className="footer-bar">

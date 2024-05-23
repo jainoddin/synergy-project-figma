@@ -1,6 +1,6 @@
 import React,{useState} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell, faLessThan,faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faLessThan,faLocationDot,faBookmark, } from "@fortawesome/free-solid-svg-icons";
 import "./Details.css";
 import img1 from "../../imgs/imgg1.jpeg";
 import av from "../../imgs/av.jpg";
@@ -11,6 +11,7 @@ import imgd3 from "../../imgs/3.jpeg";
 import imgd4 from "../../imgs/4.jpeg";
 import imgd5 from "../../imgs/5.jpeg";
 import imgd6 from "../../imgs/6.jpeg";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -20,8 +21,18 @@ import imgd6 from "../../imgs/6.jpeg";
 
 
 
-const Details = () => {
+const Details = ({ data }) => {
   const [avatar, setavatar] = useState(av);
+  const navigateFunc = useNavigate();
+
+
+  const goback=()=>{
+    navigateFunc("/index");
+
+
+  }
+
+  
 
   return (
     <>
@@ -32,13 +43,13 @@ const Details = () => {
              className="details-img"
             ></img></div>
              <div>
-          <button className="btn-details" style={{position:"absolute"}}>
+          <button className="btn-details" style={{position:"absolute"}} onClick={goback}>
             {" "}
             <FontAwesomeIcon icon={faLessThan} style={{ fontSize: "13px" }} />
           </button>
           <button className="btn-detail" style={{position:"absolute"}}>
             {" "}
-            <FontAwesomeIcon icon={faLessThan} style={{ fontSize: "13px" }} />
+            <FontAwesomeIcon icon={faBookmark} style={{ fontSize: "13px" }} />
           </button>
           
         </div>
@@ -46,7 +57,7 @@ const Details = () => {
             <div className="log-dot">
             <span className="dot1 activee"></span>
             </div>
-            <div>
+            <div style={{paddingLeft:"15px"}}>
               <h1 style={{fontSize:"20px",paddingLeft:"10px"}}>Niladri Reservoir</h1>
               <p style={{fontSize:"10px",paddingLeft:"10px",marginTop:"-10px"}}>Tekergat, Sunamgnj</p>
               <div style={{display:"flex"}}>
@@ -56,7 +67,7 @@ const Details = () => {
               style={{ borderRadius: "50%",width:"13%",position:"fixed", top:"42%",left:"75%" }}
             />              </div>
             </div>
-            <div>
+            <div style={{paddingLeft:"15px"}}>
                <div
             style={{
               display: "flex",
@@ -133,8 +144,8 @@ const Details = () => {
           </div>
 
 
-         <div style={{padding:"10px"}}><h1 style={{fontSize:"18px",marginTop:"-6px"}}>About Destination</h1><div style={{height:"80px",overflow:"hidden",marginTop:"-10px"}}><p style={{fontSize:"15px",overflow:'hidden',marginTop:"-5px"}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><button style={{color:"orange",position:"fixed",top:"84%",backgroundColor:"whitesmoke",border:"none",left:"57%",marginLeft:"20px"}}>Read more</button></div></div>
-         <div className="b" style={{  justifyContent: "center",padding:"5px",marginLeft:"25px",marginTop:"-10px"}}>
+         <div style={{padding:"10px"}}><h1 style={{fontSize:"18px",marginTop:"-6px",paddingLeft:"15px",paddingBottom:"10px"}}>About Destination</h1><div style={{height:"80px",overflow:"hidden",marginTop:"-10px",paddingLeft:"15px",paddingRight:"10px"}}><p style={{fontSize:"15px",overflow:'hidden',marginTop:"-5px"}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><button style={{color:"orange",position:"fixed",top:"82.9%",backgroundColor:"whitesmoke",border:"none",left:"57%",marginLeft:"20px"}}>Read more</button></div></div>
+         <div className="b" style={{  justifyContent: "center",padding:"5px",marginLeft:"25px",marginTop:"-7px"}}>
         <button className="btn2" style={{width:"90%" }}>
           Next
         </button>

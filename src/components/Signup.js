@@ -10,6 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import emailjs from 'emailjs-com';
 import OTPInput, { ResendOTP } from "otp-input-react";
+import Home from './indexpages/Home';
 
 
 
@@ -21,6 +22,7 @@ const Signup  = () => {
     const [sendingOTP, setSendingOTP] = useState(false);
     const [otpValue, setOtpValue] = useState(""); 
     const [emailValue, setemailValue] = useState('');
+    const [dat,setdat]=useState('false');
 
   const handleInputChange = (text) => {
     setOtpValue(text); // Update OTP value state
@@ -127,6 +129,7 @@ const Signup  = () => {
 
   return (
     <>
+
     <ToastContainer></ToastContainer>
     <navigateFunc></navigateFunc>
     {!otpSent ? ( <div style={{overflow:"hidden"}}>
@@ -219,6 +222,7 @@ const Signup  = () => {
         </div>
       </div>           
       )} 
+    <Home data={FormData.name}></Home>
     </>
   )
 }

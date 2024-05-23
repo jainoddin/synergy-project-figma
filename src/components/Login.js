@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleLeft,
@@ -14,13 +14,39 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import cookie from "js-cookie";
 import axios from "axios";
+import Home from "./indexpages/Home";
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [idd,setId]=useState("")
 
   const passwordInput = React.useRef(null);
   const toggler = React.useRef(null);
+
+
+  const routeHappyData = 'some-data-value';
+  <Home routeHappyData={routeHappyData} />
+  
+
+
+  //login id
+  const fetchDetails = async () => {
+    try {
+      const response = await axios.get(`http://localhost:4000/signupname/${email}`);
+      setId(response.data.name);
+      console.log(response.data.name)
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchDetails();
+  }, []);
+  console.log("login id",idd);
+  console.log("login EMAIL",email);
 
   const navigateFunc = useNavigate();
   const handleSkip = () => {
@@ -42,12 +68,12 @@ const Login = () => {
         password,
       });
       const data = response.data;
-      console.log(data);
       cookie.set("jwtAuth", data.token);
       console.log("User Login successfully!");
       toast.success("Logged in Successfully!");
+      
 
-      navigateFunc("/index");
+      navigateFunc(`/index/${email}`);
     } catch (err) {
       console.log(err);
       toast.error("Invalid Credentials!");
@@ -60,8 +86,13 @@ const Login = () => {
     const password = passwordInput.current.value;
   };
 
+
+  
+
+
   return (
     <>
+      
       <ToastContainer />
       <div style={{ overflow: "hidden" }}>
         <div style={{ position: "relative", height: "50px" }}>
@@ -110,9 +141,11 @@ const Login = () => {
               </a>
             </div>
             <div class="wrap">
+            
               <button className="button" onClick={submitHandler} type="submit">
                 Submit
               </button>
+              
             </div>
           </form>
           <p className="p">
@@ -142,6 +175,10 @@ const Login = () => {
           </div>
         </div>
       </div>
+      <div style={{position:"fixed",top:"200%"}}>
+      
+      </div>
+      
     </>
   );
 };

@@ -1,5 +1,5 @@
 import img1 from "../imgs/img-1.jpeg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import React from "react";
 
 function Page2() {
@@ -7,6 +7,7 @@ function Page2() {
   const handleSkip = () => {
     navigateFunc("/home2");
   };
+  
 
   return (
     <div className="page2-home">

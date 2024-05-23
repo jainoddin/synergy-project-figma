@@ -2,6 +2,7 @@ import "./Page_1.css";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 const Page_1 = () => {
   const [color, setColor] = useState("blue");
 
@@ -19,6 +20,9 @@ const Page_1 = () => {
       navigate("/home");
     }, 2000); // 20 seconds
   }, []);
+
+
+  
 
   return (
     <div className="page-1-container">
